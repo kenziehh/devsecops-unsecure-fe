@@ -5,7 +5,7 @@ import { BASE_URL } from "@/lib/env"
 import { useSession } from "next-auth/react"
 
 export default function TransactionDetail({ id }: { id: string }) {
-    const { data: transaction, isLoading } = useGetTransactionById(id)
+    const { data: transaction, isLoading, isError } = useGetTransactionById(id)
     const session = useSession()
     const [fileUrl, setFileUrl] = useState<string | null>(null)
     const [fileType, setFileType] = useState<"image" | "pdf" | null>(null)
@@ -64,6 +64,16 @@ export default function TransactionDetail({ id }: { id: string }) {
             </section>
         )
     }
+
+    if (isError) {
+        return (
+            <section className="container py-10 md:py-20 text-center">
+                <h1 className="text-2xl font-bold mb-4">Yahaha gapunya akses</h1>
+                <p className="text-gray-500">You does'nt have access to this transaction.</p>
+            </section>
+        )
+    }
+
 
     if (!transaction) {
         return (

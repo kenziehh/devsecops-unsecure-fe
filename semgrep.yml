@@ -1,0 +1,20 @@
+rules:
+  - id: react-dangerouslysetinnerhtml-xss
+    patterns:
+      - pattern: |
+          <div dangerouslySetInnerHTML={{ __html: $HTML }} />
+      - pattern-not: |
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize($HTML) }} />
+    message: |
+      ⚠️ Possible XSS vulnerability: avoid using dangerouslySetInnerHTML with unsanitized HTML.
+      Use DOMPurify.sanitize() or another trusted sanitizer before rendering.
+      Example fix:
+        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
+    languages: [javascript, typescript]
+    severity: ERROR
+    metadata:
+      category: security
+      cwe: "CWE-79: Cross-site Scripting (XSS)"
+      owasp: "A03:2021 – Injection"
+      references:
+        - https://owasp.org/www-community/attacks/xss/

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <explanation> */
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -15,6 +16,8 @@ import { toast } from 'sonner'
 import { handleApiError } from '@/lib/error'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import DOMPurify from "dompurify";
+
 
 export default function TransactionTable({ transactions, isLoading }: { transactions: Transaction[]; isLoading: boolean }) {
     const [id, setId] = useState("")
@@ -110,23 +113,13 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                         </TableCell>
                                         <TableCell className="max-w-xs truncate">
 
-                                            {/** biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
                                             <div dangerouslySetInnerHTML={{
-                                                __html: transaction.note || '',
+                                                __html: DOMPurify.sanitize(transaction.note || ''),
 
                                             }} />
 
                                         </TableCell>
                                         <TableCell>{transaction.period}</TableCell>
-                                        {/* <TableCell
-                                            className={cn(
-                                                "text-right font-semibold",
-                                                transaction.transaction_type === "income" ? "text-success" : "text-destructive"
-                                            )}
-                                        >
-                                            {transaction.transaction_type === "income" ? "+" : "-"}
-                                            {formatRupiah(transaction.amount)}
-                                        </TableCell> */}
                                         <TableCell
                                             className={cn(
                                                 "font-semibold",
