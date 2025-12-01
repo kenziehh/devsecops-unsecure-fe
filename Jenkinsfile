@@ -156,7 +156,7 @@ EOF
                           --network staging_unsecure_app_network \
                           -v \$(pwd):/zap/wrk \
                           -t zaproxy/zap-stable zap-baseline.py \
-                          -t http://unsecure-cashflow-fe-staging:${STAGING_PORT} \
+                          -t http://unsecure-cashflow-fe-staging:${INTERNAL_PORT} \
                           -r zap-report.html \\
                           -w zap-report.md \\
                           -J zap-report.json \\
