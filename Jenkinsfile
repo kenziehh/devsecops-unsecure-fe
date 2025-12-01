@@ -153,7 +153,7 @@ EOF
                     sh """
                         # Start ZAP
                         docker run --rm -u 0 \
-                          --network staging_app_network \
+                          --network staging_unsecure_app_network \
                           -v \$(pwd):/zap/wrk \
                           -t zaproxy/zap-stable zap-baseline.py \
                           -t http://unsecure-cashflow-fe-staging:${STAGING_PORT} \
