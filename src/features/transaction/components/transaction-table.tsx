@@ -16,7 +16,6 @@ import { toast } from 'sonner'
 import { handleApiError } from '@/lib/error'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import DOMPurify from "dompurify";
 
 
 export default function TransactionTable({ transactions, isLoading }: { transactions: Transaction[]; isLoading: boolean }) {
@@ -114,8 +113,7 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                         <TableCell className="max-w-xs truncate">
 
                                             <div dangerouslySetInnerHTML={{
-                                                __html: DOMPurify.sanitize(transaction.note || ''),
-
+                                                __html: transaction.note || '',
                                             }} />
 
                                         </TableCell>
